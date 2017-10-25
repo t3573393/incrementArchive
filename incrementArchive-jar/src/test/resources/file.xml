@@ -1,0 +1,16 @@
+<files type="OUTPUT">
+	<set name="add" relative="true">
+		<file relative="false">D:\workspace-my\incrementArchive\incrementArchive-jar\target\classes\org\fartpig\incrementarchive\constant</file>
+	</set>
+	
+	<set name="modify" relative="true">
+		<file relative="true">\org\fartpig\incrementarchive\constant</file>
+		<file relative="true">\org\fartpig\incrementarchive\constant\ChangeLogSourceEnum.class</file>
+	</set>
+	
+	<set name="remove" relative="false">
+		<file relative="false">D:\workspace-my\incrementArchive\incrementArchive-jar\target\classes\org\fartpig\incrementarchive\constant\GlobalConfig.class</file>
+		<file relative="false">D:\workspace-my\incrementArchive\incrementArchive-jar\target\classes\org\fartpig\incrementarchive</file>
+	</set>
+	
+</files>

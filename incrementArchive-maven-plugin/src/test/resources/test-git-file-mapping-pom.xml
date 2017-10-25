@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.fartpig</groupId>
+		<artifactId>incrementArchive</artifactId>
+		<version>0.2.0-RELEASE</version>
+	</parent>
+	<artifactId>incrementArchive-maven-plugin-test</artifactId>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.fartpig</groupId>
+				<artifactId>incrementArchive-maven-plugin</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+						<id>test-incrementArchive</id>
+						<goals>
+							<goal>
+								incrementArchive
+							</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<inputDir>D:/workspace-my/incrementArchive</inputDir>
+					<outputDir>D:/clinfeng-target</outputDir>
+					<sourceEnum>CHANGE_LOG_GIT</sourceEnum>
+					<typeEnum>SOURCE</typeEnum>
+					<fileMapping>
+						<property>
+							<name>/src/main/java/*.java</name>
+							<value>/target/classes/*.class</value>
+						</property>
+						<property>
+							<name>/src/main/resources/*</name>
+							<value>/target/classes/*</value>
+						</property>
+						<property>
+							<name>/src/test/java/*.java</name>
+							<value>/target/test-classes/*.class</value>
+						</property>
+						<property>
+							<name>/src/main/webapp/*</name>
+							<value>/*</value>
+						</property>
+					</fileMapping>
+					<url>D:/workspace-my/incrementArchive/.git</url>
+					<startVersion>52c66ee0bd27554de3b43989286c3da75d936c4e</startVersion>
+					<zipFileName>cincrement.zip</zipFileName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

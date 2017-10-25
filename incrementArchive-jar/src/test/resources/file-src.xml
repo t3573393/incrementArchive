@@ -1,0 +1,11 @@
+<files type="SOURCE">
+	<set name="add" relative="true">
+		<file relative="false">D:\workspace-my\incrementArchive\incrementArchive-jar\src\main\java\org\fartpig\incrementarchive\constant</file>
+	</set>
+	
+	<set name="modify" relative="true">
+		<file relative="true">\src\main\resources\log4j.properties</file>
+		<file relative="false">D:\workspace-my\incrementArchive\incrementArchive-jar\src\main\resources\tools.properties</file>
+	</set>
+	
+</files>
