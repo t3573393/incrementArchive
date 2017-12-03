@@ -92,7 +92,7 @@ public class App {
 		endVersion.setRequired(false);
 		options.addOption(endVersion);
 
-		Option prefixPath = new Option("pp", "prefixPath", true, "please set the endVersion");
+		Option prefixPath = new Option("pp", "prefixPath", true, "please set the prefixPath");
 		prefixPath.setRequired(false);
 		options.addOption(prefixPath);
 

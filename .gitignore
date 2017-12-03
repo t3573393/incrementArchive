@@ -1,0 +1,9 @@
+.settings
+*/.settings
+.project
+incrementArchive-jar/.gitignore
+incrementArchive-jar/.project
+incrementArchive-jar/.classpath
+incrementArchive-maven-plugin/.gitignore
+incrementArchive-maven-plugin/.project
+incrementArchive-maven-plugin/.classpath
