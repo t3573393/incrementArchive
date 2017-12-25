@@ -6,6 +6,7 @@ It aim to  the websphere increment deployment.
 * support the file extensions filter.  
 * support retrieve changlong from the text, svn, git, xml format.   
 * support the src file to target file mapping for the folder or file both. 
+* suuport generate the assemble.xml for use the maven-assemble-plugin to increment archive.  
 
 # usage
 
@@ -84,7 +85,8 @@ example:
 	</plugin>  
 
 	
-example to generate assemble.xml:	
+example to generate assemble.xml:  
+
 	<plugin>
 		<groupId>org.fartpig</groupId>
 		<artifactId>incrementArchive-maven-plugin</artifactId>
