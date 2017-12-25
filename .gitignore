@@ -1,6 +1,9 @@
+/target/
 .settings
 */.settings
+/.classpath
 .project
+my.log
 incrementArchive-jar/.gitignore
 incrementArchive-jar/.project
 incrementArchive-jar/.classpath

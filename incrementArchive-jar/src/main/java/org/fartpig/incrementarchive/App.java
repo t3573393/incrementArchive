@@ -16,9 +16,11 @@ import org.fartpig.incrementarchive.constant.ChangeLogTypeEnum;
 import org.fartpig.incrementarchive.constant.GitConfig;
 import org.fartpig.incrementarchive.constant.GlobalConfig;
 import org.fartpig.incrementarchive.constant.GlobalConst;
+import org.fartpig.incrementarchive.constant.OutputEnum;
 import org.fartpig.incrementarchive.constant.SvnConfig;
 import org.fartpig.incrementarchive.entity.ChangeLogManifest;
 import org.fartpig.incrementarchive.entity.FileMappingMetaInfo;
+import org.fartpig.incrementarchive.phase.AssembleFileGenerateAction;
 import org.fartpig.incrementarchive.phase.ChangeLogDataFetchAction;
 import org.fartpig.incrementarchive.phase.FileMappingMetaCreateAction;
 import org.fartpig.incrementarchive.phase.FileTransferAction;
@@ -92,7 +94,7 @@ public class App {
 		endVersion.setRequired(false);
 		options.addOption(endVersion);
 
-		Option prefixPath = new Option("pp", "prefixPath", true, "please set the prefixPath");
+		Option prefixPath = new Option("pp", "prefixPath", true, "please set the endVersion");
 		prefixPath.setRequired(false);
 		options.addOption(prefixPath);
 
@@ -146,7 +148,6 @@ public class App {
 			svnConfig.setPassword(cmd.getOptionValue("password"));
 			svnConfig.setUrlPath(cmd.getOptionValue("url"));
 			svnConfig.setStartVersion(Long.valueOf(cmd.getOptionValue("startVersion")));
-			svnConfig.setPrefixPath(cmd.getOptionValue("prefixPath", "/"));
 
 			String endVersionStr = cmd.getOptionValue("endVersion");
 			if (!StringUtils.isEmpty(endVersionStr)) {
@@ -158,7 +159,6 @@ public class App {
 
 			gitConfig.setUrlPath(cmd.getOptionValue("url"));
 			gitConfig.setStartVersion(cmd.getOptionValue("startVersion"));
-			gitConfig.setPrefixPath(cmd.getOptionValue("prefixPath", "/"));
 
 			String endVersionStr = cmd.getOptionValue("endVersion");
 			if (!StringUtils.isEmpty(endVersionStr)) {
@@ -179,6 +179,7 @@ public class App {
 
 		log.info(String.format("set zipFileName:%s", zipFileName));
 		log.info(String.format("set extensions:%s", extsStr));
+		log.info(String.format("set prefixPath:%s", prefixPath));
 
 		if (svnConfig != null) {
 			log.info(String.format("set svnConfig:%s", svnConfig));
@@ -232,7 +233,7 @@ public class App {
 
 		// retrieve change log data
 		ChangeLogDataFetchAction logDataFetchAction = new ChangeLogDataFetchAction();
-		ChangeLogManifest manifest = logDataFetchAction.fetchChangeLogData(typeEnum, changeLogSourceFile, sourceEnum);
+		ChangeLogManifest manifest = logDataFetchAction.fetchChangeLogData(typeEnum, sourceEnum);
 		// source map to output
 		if (manifest.getLogType() == ChangeLogTypeEnum.SOURCE) {
 			// file mapping meta info
@@ -243,12 +244,19 @@ public class App {
 			sourceMapToOutputAction.sourceToOutput(manifest, inputDir, fileMappingMetaInfos);
 		}
 
-		// file tranfer
-		FileTransferAction fileTranferAction = new FileTransferAction();
-		fileTranferAction.transferFiles(inputDir, outputDir, manifest, config);
-		// increment archive
-		IncrementArchiveAction incrementArchiveAction = new IncrementArchiveAction();
-		incrementArchiveAction.incrementArchiveToPath(inputDir, outputDir, zipFileName, manifest);
+		if (config.getOutputEnum() == OutputEnum.OUTPUT_FILES) {
+			// file tranfer
+			FileTransferAction fileTranferAction = new FileTransferAction();
+			fileTranferAction.transferFiles(inputDir, outputDir, manifest, config);
+			// increment archive
+			IncrementArchiveAction incrementArchiveAction = new IncrementArchiveAction();
+			incrementArchiveAction.incrementArchiveToPath(inputDir, outputDir, zipFileName, manifest);
+		} else if (config.getOutputEnum() == OutputEnum.OUTPUT_ASSEMBLE) {
+			// generate assemble file
+			AssembleFileGenerateAction assembleFileGenerateAction = new AssembleFileGenerateAction();
+			assembleFileGenerateAction.generateAssembleFile(inputDir, outputDir, manifest, config);
+		}
+
 	}
 
 }

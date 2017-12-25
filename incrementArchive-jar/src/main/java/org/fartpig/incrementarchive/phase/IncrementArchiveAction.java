@@ -56,7 +56,6 @@ public class IncrementArchiveAction {
 			ToolLogger.getInstance().info("zip src folder:" + targetPath + " - destZipFile:" + destZipFile);
 			FolderZipUtil.zipFolder(targetPath, destZipFile, false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ToolLogger.getInstance().error("error:", e);
 			throw new ToolException(ToolLogger.getInstance().getCurrentPhase(), "error");

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.fartpig</groupId>
 		<artifactId>incrementArchive</artifactId>
-		<version>0.2.0-RELEASE</version>
+		<version>0.3.0-RELEASE</version>
 	</parent>
 	<artifactId>incrementArchive-maven-plugin-test</artifactId>
 
@@ -25,12 +25,12 @@
 					</execution>
 				</executions>
 				<configuration>
-					<inputDir>D:/clinfeng</inputDir>
-					<outputDir>D:/clinfeng-target</outputDir>
+					<inputDir>${basedir}</inputDir>
+					<outputDir>${basedir}/fjcmis-target</outputDir>
 					<sourceEnum>CHANGE_LOG_GIT</sourceEnum>
-					<url>D:/clinfeng/.git</url>
+					<url>D:/cmis-daybat-linfeng/.git</url>
 					<startVersion>b3e098cb4433e76b43246a43afb5cb04a40acdba</startVersion>
-					<zipFileName>clinfeng-increment.zip</zipFileName>
+					<zipFileName>cmis-daybat-linfeng-increment.zip</zipFileName>
 				</configuration>
 			</plugin>
 		</plugins>

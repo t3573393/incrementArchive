@@ -53,6 +53,7 @@ public class ScmTest extends TestCase {
 
 			endRevision = repository.getLatestRevision();
 
+			@SuppressWarnings("unchecked")
 			Collection<SVNLogEntry> logEntries = repository.log(new String[] { "" }, null, startRevision, endRevision,
 					true, true);
 
@@ -96,7 +97,7 @@ public class ScmTest extends TestCase {
 		}
 
 		System.out.println("branchName: " + branchName);
-		Map<String, Ref> refMaps = repository.getAllRefs();
+		// Map<String, Ref> refMaps = repository.getAllRefs();
 
 		ObjectId head = repository.resolve(Constants.HEAD);
 

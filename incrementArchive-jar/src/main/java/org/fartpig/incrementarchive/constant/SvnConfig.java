@@ -5,7 +5,6 @@ public class SvnConfig {
 	private String name;
 	private String password;
 	private String urlPath;
-	private String prefixPath;
 
 	private long startVersion;
 	private long endVersion = -1;
@@ -51,15 +50,7 @@ public class SvnConfig {
 	}
 
 	public String toString() {
-		return name + ":" + password + "@" + urlPath + "@" + startVersion + "-" + endVersion + "@" + prefixPath;
-	}
-
-	public String getPrefixPath() {
-		return prefixPath;
-	}
-
-	public void setPrefixPath(String prefixPath) {
-		this.prefixPath = prefixPath;
+		return name + ":" + password + "@" + urlPath + "@" + startVersion + "-" + endVersion;
 	}
 
 }

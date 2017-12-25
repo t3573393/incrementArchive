@@ -27,11 +27,18 @@ public class TxtChangeLogDataSource extends AbstractChangeLogDataSource implemen
 			while (iterator.hasNext()) {
 				String line = iterator.nextLine();
 				ToolLogger.getInstance().info("load from file:" + line);
+				// remove the prefix path
+				String prefixPath = config.getPrefixPath();
+				if (prefixPath != null) {
+					if (line.startsWith(prefixPath)) {
+						line = line.substring(prefixPath.length());
+					}
+				}
+
 				List<ChangeLogEntry> entries = convertFromFileNameToChangeLogEntry(true, line, config);
 				manifest.getModifyEntries().addAll(entries);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ToolLogger.getInstance().error("error:", e);
 

@@ -134,8 +134,8 @@ public class GitChangeLogDataSource extends AbstractChangeLogDataSource implemen
 			List<ChangeLogEntry> targetEntries) {
 		for (String fileName : fileNames) {
 			// remove the prefix path
-			String prefixPath = config.getGitConfig().getPrefixPath();
-			if (fileName.startsWith(prefixPath)) {
+			String prefixPath = config.getPrefixPath();
+			if (prefixPath != null && fileName.startsWith(prefixPath)) {
 				fileName = fileName.substring(prefixPath.length());
 			}
 

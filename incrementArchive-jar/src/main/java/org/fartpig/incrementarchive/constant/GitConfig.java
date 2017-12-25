@@ -3,7 +3,6 @@ package org.fartpig.incrementarchive.constant;
 public class GitConfig {
 
 	private String urlPath;
-	private String prefixPath;
 
 	private String startVersion;
 	private String endVersion = null;
@@ -33,15 +32,7 @@ public class GitConfig {
 	}
 
 	public String toString() {
-		return urlPath + "@" + startVersion + "-" + endVersion + "@" + prefixPath;
-	}
-
-	public String getPrefixPath() {
-		return prefixPath;
-	}
-
-	public void setPrefixPath(String prefixPath) {
-		this.prefixPath = prefixPath;
+		return urlPath + "@" + startVersion + "-" + endVersion;
 	}
 
 }

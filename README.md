@@ -48,6 +48,8 @@ besides you can use a file named tools.properties to set the params:
 	startVersion: the same with the -sv above
 	endVersion: the same with the -ev above
 	prefixPath: the same with the -pp above  
+	outputEnum: [OUTPUT_FILES, OUTPUT_ASSEMBLE]: OUTPUT_FILES generate the tranditional increment files, OUTPUT_ASSEMBLE generate the assemble xml files  
+	assembleTemplate: assemble.xml template file path  
 
 also you can set the filemapping.properties, this use the wildcard the match the word or char(? or *), for example:  
 
@@ -62,7 +64,7 @@ example:
 	<plugin>
           <groupId>org.fartpig</groupId>
           <artifactId>incrementArchive-maven-plugin</artifactId>
-          <version>0.2.0-RELEASE</version>
+          <version>0.3.0-RELEASE</version>
           <executions>
 			<execution>
 				<id>test-incrementArchive</id>
@@ -78,5 +80,46 @@ example:
 			<outputDir>${basedir}/fjcmis-target</outputDir>
 			<changeLogSourceFile>D:/workspace-my/fjcmis-file.txt</changeLogSourceFile>
 			<zipFileName>fjcmis.zip</zipFileName>
+		</configuration>
+	</plugin>  
+
+	
+example to generate assemble.xml:	
+	<plugin>
+		<groupId>org.fartpig</groupId>
+		<artifactId>incrementArchive-maven-plugin</artifactId>
+		<version>0.3.0-RELEASE</version>
+		<executions>
+			<execution>
+				<id>test-incrementArchive</id>
+				<phase>prepare-package</phase>
+				<goals>
+					<goal>
+						incrementArchive
+					</goal>
+				</goals>
+			</execution>
+		</executions>
+		<configuration>
+			<inputDir>${basedir}/target</inputDir>
+			<outputDir>${basedir}/fjcmis-target</outputDir>
+			<typeEnum>OUTPUT</typeEnum>
+			<outputEnum>OUTPUT_ASSEMBLE</outputEnum>
+			<fileMapping>
+				<property>
+					<name>/src/main/webapp/*</name>
+					<value>/*</value>
+				</property>
+				<property>
+					<name>/src/main/java/*.java</name>
+					<value>/WEB-INF/classes/*.class</value>
+				</property>
+				<property>
+					<name>/src/main/java/*.xml</name>
+					<value>/WEB-INF/classes/*.xml</value>
+				</property>
+			</fileMapping>
+			<assembleTemplate>${basedir}/target/test-classes/my-assemble.ftl</assembleTemplate>
+			<changeLogSourceFile>${basedir}/target/test-classes/assemble.txt</changeLogSourceFile>
 		</configuration>
 	</plugin>

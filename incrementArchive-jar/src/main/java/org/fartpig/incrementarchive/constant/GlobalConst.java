@@ -7,6 +7,7 @@ public final class GlobalConst {
 	public static final String PHASE_FILE_MAPPING = "file_mapping";
 	public static final String PHASE_SOURCEMAPTOOUTPUT = "source_to_output";
 	public static final String PHASE_INCREMENT_OUTPUT = "increment_output";
+	public static final String PHASE_GENERATE_ASSEMBLE = "generate_assemble";
 	public static final String PHASE_ASSEMBLE_OUTPUT = "assemble_output";
 
 	// add set

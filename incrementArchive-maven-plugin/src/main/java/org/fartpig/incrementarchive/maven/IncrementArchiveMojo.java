@@ -20,6 +20,7 @@ import org.fartpig.incrementarchive.constant.ChangeLogSourceEnum;
 import org.fartpig.incrementarchive.constant.ChangeLogTypeEnum;
 import org.fartpig.incrementarchive.constant.GitConfig;
 import org.fartpig.incrementarchive.constant.GlobalConfig;
+import org.fartpig.incrementarchive.constant.OutputEnum;
 import org.fartpig.incrementarchive.constant.SvnConfig;
 import org.fartpig.incrementarchive.entity.OrderedProperties;
 import org.fartpig.incrementarchive.maven.util.Constants;
@@ -60,6 +61,18 @@ public class IncrementArchiveMojo extends AbstractMojo {
 				globalConfig.fillExtensions(extensions);
 			}
 
+			if (!StringUtils.isEmpty(prefixPath)) {
+				globalConfig.setPrefixPath(prefixPath);
+			}
+
+			if (!StringUtils.isEmpty(outputEnum)) {
+				globalConfig.setOutputEnum(OutputEnum.valueOf(outputEnum));
+			}
+
+			if (!StringUtils.isEmpty(assembleTemplate)) {
+				globalConfig.setAssembleTemplate(assembleTemplate);
+			}
+
 			SvnConfig svnConfig = null;
 			GitConfig gitConfig = null;
 			if (globalConfig.getSourceEnum() == ChangeLogSourceEnum.CHANGE_LOG_SVN) {
@@ -68,14 +81,12 @@ public class IncrementArchiveMojo extends AbstractMojo {
 				svnConfig.setPassword(password);
 				svnConfig.setUrlPath(url);
 				svnConfig.setStartVersion(Long.valueOf(startVersion));
-				svnConfig.setPrefixPath(prefixPath == null ? "/" : prefixPath);
 				svnConfig.setEndVersion(endVersion == null ? -1 : Long.valueOf(endVersion));
 				globalConfig.setSvnConfig(svnConfig);
 			} else if (globalConfig.getSourceEnum() == ChangeLogSourceEnum.CHANGE_LOG_GIT) {
 				gitConfig = new GitConfig();
 				gitConfig.setUrlPath(url);
 				gitConfig.setStartVersion(startVersion);
-				gitConfig.setPrefixPath(prefixPath == null ? "/" : prefixPath);
 				gitConfig.setEndVersion(endVersion);
 				globalConfig.setGitConfig(gitConfig);
 			}
@@ -158,5 +169,11 @@ public class IncrementArchiveMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "false")
 	protected boolean failOnError;
+
+	@Parameter
+	private String outputEnum;
+
+	@Parameter
+	private String assembleTemplate;
 
 }

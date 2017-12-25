@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.fartpig</groupId>
 		<artifactId>incrementArchive</artifactId>
-		<version>0.3.0-RELEASE</version>
+		<version>0.3.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>incrementArchive-maven-plugin-test</artifactId>
 
@@ -17,6 +17,7 @@
 				<executions>
 					<execution>
 						<id>test-incrementArchive</id>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>
 								incrementArchive
@@ -25,16 +26,26 @@
 					</execution>
 				</executions>
 				<configuration>
-					<inputDir>D:/efdifconsole</inputDir>
-					<outputDir>D:/efdasifconsole-target</outputDir>
-					<sourceEnum>CHANGE_LOG_SVN</sourceEnum>
-					<name>linfeng</name>
-					<password>linfeng</password>
-					<prefixPath>/console</prefixPath>
-					<url>https://192.12.01.57/svn/ECIfconsole/</url>
-					<startVersion>5418</startVersion>
-					<endVersion>5420</endVersion>
-					<zipFileName>ecincrement.zip</zipFileName>
+					<inputDir>${basedir}/target</inputDir>
+					<outputDir>${basedir}/fjcmis-target</outputDir>
+					<typeEnum>OUTPUT</typeEnum>
+					<outputEnum>OUTPUT_ASSEMBLE</outputEnum>
+					<fileMapping>
+						<property>
+							<name>/src/main/webapp/*</name>
+							<value>/*</value>
+						</property>
+						<property>
+							<name>/src/main/java/*.java</name>
+							<value>/WEB-INF/classes/*.class</value>
+						</property>
+						<property>
+							<name>/src/main/java/*.xml</name>
+							<value>/WEB-INF/classes/*.xml</value>
+						</property>
+					</fileMapping>
+					<assembleTemplate>${basedir}/target/test-classes/my-assemble.ftl</assembleTemplate>
+					<changeLogSourceFile>${basedir}/target/test-classes/assemble.txt</changeLogSourceFile>
 				</configuration>
 			</plugin>
 		</plugins>

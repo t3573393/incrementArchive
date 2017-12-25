@@ -56,6 +56,8 @@ public class SourceMapToOutputAction {
 			// add the separator for match src
 			if (aEntry instanceof ChangeLogPathEntry) {
 				relativePath = PathUtil.formatFolderPath(relativePath);
+			} else if (aEntry instanceof ChangeLogFileEntry) {
+				relativePath = PathUtil.formatFilePath(relativePath);
 			}
 
 			String srcPath = mappingMetaInfo.getSrcPath();

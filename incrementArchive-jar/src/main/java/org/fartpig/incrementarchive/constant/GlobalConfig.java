@@ -55,8 +55,12 @@ public class GlobalConfig {
 			"css", "raq", "xls", "jar", "tld", "jnlp", "html", "properties", "psd" };
 	private boolean filterExtension = false;
 
+	private OutputEnum outputEnum = OutputEnum.OUTPUT_FILES;
+	private String assembleTemplate;
+
 	private SvnConfig svnConfig;
 	private GitConfig gitConfig;
+	private String prefixPath;
 
 	private OrderedProperties fileMapping;
 
@@ -126,6 +130,12 @@ public class GlobalConfig {
 		String extensionsStr = configProperties.getProperty("extensions", StringUtil.join(",", extensions));
 		extensions = extensionsStr.split("[,]");
 
+		outputEnum = OutputEnum
+				.valueOf(configProperties.getProperty("outputEnum", outputEnum.toString()).toUpperCase());
+
+		assembleTemplate = configProperties.getProperty("assembleTemplate", assembleTemplate);
+		prefixPath = configProperties.getProperty("prefixPath", "/");
+
 		if (sourceEnum == ChangeLogSourceEnum.CHANGE_LOG_SVN) {
 			svnConfig = new SvnConfig();
 
@@ -134,7 +144,6 @@ public class GlobalConfig {
 			svnConfig.setUrlPath(configProperties.getProperty("urlPath"));
 			svnConfig.setStartVersion(Long.valueOf(configProperties.getProperty("startVersion")).longValue());
 			svnConfig.setEndVersion(Long.valueOf(configProperties.getProperty("endVersion", "-1")).longValue());
-			svnConfig.setPrefixPath(configProperties.getProperty("prefixPath", "/"));
 
 		} else if (sourceEnum == ChangeLogSourceEnum.CHANGE_LOG_GIT) {
 			gitConfig = new GitConfig();
@@ -142,7 +151,6 @@ public class GlobalConfig {
 			gitConfig.setUrlPath(configProperties.getProperty("urlPath"));
 			gitConfig.setStartVersion(configProperties.getProperty("startVersion"));
 			gitConfig.setEndVersion(configProperties.getProperty("endVersion"));
-			gitConfig.setPrefixPath(configProperties.getProperty("prefixPath", "/"));
 		}
 
 		ToolLogger log = ToolLogger.getInstance();
@@ -154,6 +162,9 @@ public class GlobalConfig {
 		log.info("changeLogSourceFile:" + changeLogSourceFile);
 		log.info("typeEnum:" + typeEnum);
 		log.info("extensions:" + extensionsStr);
+
+		log.info("outputEnum:" + outputEnum);
+		log.info("assembleTemplate:" + assembleTemplate);
 
 		if (svnConfig != null) {
 			log.info("name:" + svnConfig.getName());
@@ -277,6 +288,30 @@ public class GlobalConfig {
 
 	public void setFileMapping(OrderedProperties fileMapping) {
 		this.fileMapping = fileMapping;
+	}
+
+	public OutputEnum getOutputEnum() {
+		return outputEnum;
+	}
+
+	public void setOutputEnum(OutputEnum outputEnum) {
+		this.outputEnum = outputEnum;
+	}
+
+	public String getAssembleTemplate() {
+		return assembleTemplate;
+	}
+
+	public void setAssembleTemplate(String assembleTemplate) {
+		this.assembleTemplate = assembleTemplate;
+	}
+
+	public String getPrefixPath() {
+		return prefixPath;
+	}
+
+	public void setPrefixPath(String prefixPath) {
+		this.prefixPath = prefixPath;
 	}
 
 }

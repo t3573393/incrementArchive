@@ -70,4 +70,15 @@ public class IncrementArchiveMojoTest extends AbstractMojoTestCase {
 		mojo.execute();
 
 	}
+
+	public void testAppGenerateAssemble() throws Exception {
+		File pom = getTestFile("src/test/resources/test-generate-assemble.xml");
+		assertNotNull(pom);
+		assertTrue(pom.exists());
+
+		IncrementArchiveMojo mojo = (IncrementArchiveMojo) lookupMojo("incrementArchive", pom);
+		assertNotNull(mojo);
+		mojo.execute();
+
+	}
 }

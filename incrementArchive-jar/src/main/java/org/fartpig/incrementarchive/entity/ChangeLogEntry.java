@@ -2,6 +2,7 @@ package org.fartpig.incrementarchive.entity;
 
 public abstract class ChangeLogEntry {
 
+	// the original file name
 	protected String fileInputName;
 
 	protected boolean isRelative = true;

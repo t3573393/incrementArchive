@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.fartpig</groupId>
 		<artifactId>incrementArchive</artifactId>
-		<version>0.2.0-RELEASE</version>
+		<version>0.3.0-RELEASE</version>
 	</parent>
 	<artifactId>incrementArchive-maven-plugin-test</artifactId>
 
@@ -25,11 +25,11 @@
 					</execution>
 				</executions>
 				<configuration>
-					<inputDir>D:/cmain.ear</inputDir>
-					<outputDir>${basedir}/fjtarget</outputDir>
+					<inputDir>${basedir}</inputDir>
+					<outputDir>${basedir}/fjcmis-target</outputDir>
 					<extensions>xml,html</extensions>
-					<changeLogSourceFile>D:/workspace-my/incrementArchive/incrementArchive-jar/target/test-classes/f-file.txt</changeLogSourceFile>
-					<zipFileName>fis.zip</zipFileName>
+					<changeLogSourceFile>D:/workspace-my/incrementArchive/incrementArchive-jar/target/test-classes/fjcmis-file.txt</changeLogSourceFile>
+					<zipFileName>fjcmis.zip</zipFileName>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -2,10 +2,7 @@ package org.fartpig.incrementarchive.phase;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.fartpig.incrementarchive.constant.GlobalConfig;
@@ -17,15 +14,12 @@ import org.fartpig.incrementarchive.entity.ChangeLogPathEntry;
 import org.fartpig.incrementarchive.util.PathUtil;
 import org.fartpig.incrementarchive.util.ToolLogger;
 
-public class FileTransferAction {
+public class FileTransferAction extends AbstractFileOpAction {
 
 	private static final String CURRENT_PHASE = GlobalConst.PHASE_INCREMENT_OUTPUT;
 
-	private Pattern classNamePattern = null;
-
 	public FileTransferAction() {
 		ToolLogger.getInstance().setCurrentPhase(CURRENT_PHASE);
-		classNamePattern = Pattern.compile("(\\S+)[$]\\d");
 	}
 
 	public void transferFiles(String inputDir, String outputDir, ChangeLogManifest manifest, GlobalConfig config) {
@@ -70,45 +64,6 @@ public class FileTransferAction {
 		}
 	}
 
-	private List<ChangeLogFileEntry> addExtraEntryForClass(ChangeLogFileEntry fileEntry) {
-		List<ChangeLogFileEntry> tempFileEntries = new ArrayList<ChangeLogFileEntry>();
-		tempFileEntries.add(fileEntry);
-
-		// handle the special class entry : ${name}$1.class
-		String fileEx = fileEntry.getFileEx();
-		String baseName = fileEntry.getFileBaseName();
-		if ("class".equals(fileEx)) {
-			Matcher matcher = classNamePattern.matcher(baseName);
-			String classBaseName = baseName;
-			if (matcher.find()) {
-				classBaseName = matcher.group(0);
-			}
-
-			// try find the other class file: max to the 20
-			for (int i = 1; i <= 20; i++) {
-				String tempClassName = String.format("%s$%d", classBaseName, i);
-
-				ChangeLogFileEntry tempfileEntry = new ChangeLogFileEntry();
-				tempfileEntry.setFileInputName(fileEntry.getFileInputName());
-				tempfileEntry.setFileBaseName(tempClassName);
-				tempfileEntry.setFileEx(fileEx);
-				tempfileEntry.setFilePath(fileEntry.getFilePath());
-				tempfileEntry.setRelative(fileEntry.isRelative());
-				tempfileEntry.setFileMapping(fileEntry.isFileMapping());
-
-				File tempPath = new File(tempfileEntry.absolutePath());
-				// no 1 , no later ones
-				if (tempPath.exists()) {
-					tempFileEntries.add(tempfileEntry);
-				} else {
-					break;
-				}
-			}
-		}
-
-		return tempFileEntries;
-	}
-
 	private void handleFile(String opType, ChangeLogFileEntry srfFileEntry, String inputDir, String outputDir) {
 
 		List<ChangeLogFileEntry> tempFielEntries = addExtraEntryForClass(srfFileEntry);
@@ -133,36 +88,11 @@ public class FileTransferAction {
 					FileUtils.copyFile(new File(fileEntry.absolutePath()), new File(targetPath));
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
-				ToolLogger.getInstance().error("error:", e);
+				// e.printStackTrace();
+				ToolLogger.getInstance()
+						.error("operation file error from:" + fileEntry.absolutePath() + "- to:" + targetPath);
 			}
 		}
-	}
-
-	private List<ChangeLogEntry> filterEntryByExtensions(List<ChangeLogEntry> entries, String[] extensions) {
-
-		List<ChangeLogEntry> result = new ArrayList<ChangeLogEntry>();
-
-		for (ChangeLogEntry aEntry : entries) {
-			boolean needFilter = true;
-			ToolLogger.getInstance().info("prepare filter:" + aEntry.absolutePath());
-			if (aEntry instanceof ChangeLogFileEntry) {
-				ChangeLogFileEntry fileEntry = (ChangeLogFileEntry) aEntry;
-				for (String aEx : extensions) {
-					if (aEx.equals(fileEntry.getFileEx())) {
-						needFilter = false;
-						ToolLogger.getInstance().info("skip filter:" + fileEntry.absolutePath());
-						break;
-					}
-				}
-			} else {
-				needFilter = false;
-			}
-			if (!needFilter) {
-				result.add(aEntry);
-			}
-		}
-		return result;
 	}
 
 	private void handlePath(String opType, ChangeLogPathEntry pathEntry, String inputDir, String outputDir) {

@@ -73,6 +73,11 @@ public class XmlChangeLogDataSource extends AbstractChangeLogDataSource implemen
 					}
 
 					String fileName = aFileElement.getText();
+					// remove the prefix path
+					String prefixPath = config.getPrefixPath();
+					if (fileName.startsWith(prefixPath)) {
+						fileName = fileName.substring(prefixPath.length());
+					}
 					List<ChangeLogEntry> entries = convertFromFileNameToChangeLogEntry(isRelative, fileName, config);
 
 					for (ChangeLogEntry logEntry : entries) {

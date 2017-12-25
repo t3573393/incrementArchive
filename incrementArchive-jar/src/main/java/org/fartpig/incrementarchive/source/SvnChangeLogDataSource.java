@@ -60,6 +60,7 @@ public class SvnChangeLogDataSource extends AbstractChangeLogDataSource implemen
 				endRevision = repository.getLatestRevision();
 			}
 
+			@SuppressWarnings("unchecked")
 			Collection<SVNLogEntry> logEntries = repository.log(new String[] { "" }, null, startRevision, endRevision,
 					true, true);
 
@@ -157,8 +158,8 @@ public class SvnChangeLogDataSource extends AbstractChangeLogDataSource implemen
 			List<ChangeLogEntry> targetEntries) {
 		for (String fileName : fileNames) {
 			// remove the prefix path
-			String prefixPath = config.getSvnConfig().getPrefixPath();
-			if (fileName.startsWith(prefixPath)) {
+			String prefixPath = config.getPrefixPath();
+			if (prefixPath != null && fileName.startsWith(prefixPath)) {
 				fileName = fileName.substring(prefixPath.length());
 			}
 

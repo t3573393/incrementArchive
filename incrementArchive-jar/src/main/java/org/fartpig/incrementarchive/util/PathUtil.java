@@ -64,6 +64,13 @@ public final class PathUtil {
 		return folderPath;
 	}
 
+	public static String formatFilePath(String filePath) {
+		if (filePath.charAt(0) != File.separatorChar) {
+			filePath = File.separator + filePath;
+		}
+		return filePath;
+	}
+
 	public static String convertToSystemSeparator(String path) {
 		String aChar = "/";
 		String bChar = "\\";
